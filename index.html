@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أنسيت روحي </title>
+    <title>أنسيت روحي</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -97,7 +97,7 @@
         
         .poem-box {
             font-size: 1.8rem;
-            line-height: 1.8; /* تقليل المسافة بين الأسطر */
+            line-height: 1.8;
             color: #7d3c5c;
             font-weight: 500;
             position: relative;
@@ -109,7 +109,7 @@
             transform: translateX(-30px);
             transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
                         transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-            margin: 8px 0; /* تقليل المسافة بين البيت والآخر */
+            margin: 8px 0;
             transition-delay: calc(0.25s * var(--line-index));
         }
         
@@ -118,7 +118,6 @@
             transform: translateX(0);
         }
         
-        /* تأثير رجعي بسيط عند اكتمال الظهور */
         .poem-line.show:nth-child(2n) {
             transform: translateX(3px);
             transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
@@ -129,8 +128,11 @@
             margin: 35px 0 15px;
         }
         
+        /* التأثير الزجاجي الجديد للزر */
         #newPoemBtn {
-            background: linear-gradient(145deg, #d32f2f, #b71c1c);
+            background: rgba(211, 47, 47, 0.25); /* خلفية شفافة */
+            backdrop-filter: blur(12px); /* تأثير ضبابي */
+            -webkit-backdrop-filter: blur(12px); /* دعم لمتصفحات Safari */
             color: white;
             border: none;
             border-radius: 50px;
@@ -139,21 +141,25 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(211, 47, 47, 0.4);
+            box-shadow: 0 10px 25px rgba(211, 47, 47, 0.4),
+                        0 4px 30px rgba(0, 0, 0, 0.1); /* ظل ناعم إضافي */
             position: relative;
             overflow: hidden;
             letter-spacing: 1px;
+            border: 1px solid rgba(255, 255, 255, 0.3); /* حدود شفافة */
         }
         
         #newPoemBtn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(211, 47, 47, 0.6);
-            background: linear-gradient(145deg, #b71c1c, #d32f2f);
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(211, 47, 47, 0.6),
+                        0 6px 40px rgba(0, 0, 0, 0.15);
+            background: rgba(211, 47, 47, 0.35); /* زيادة الشفافية عند التحويم */
         }
         
         #newPoemBtn:active {
             transform: translateY(2px) scale(0.98);
             box-shadow: 0 5px 15px rgba(211, 47, 47, 0.5);
+            background: rgba(211, 47, 47, 0.2);
         }
         
         #newPoemBtn::after {
@@ -163,7 +169,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
             transform: translateX(-100%);
             transition: transform 0.5s ease;
         }
@@ -206,7 +212,7 @@
             
             .poem-box {
                 font-size: 1.6rem;
-                line-height: 1.7; /* تقليل المسافة بين الأسطر للجوال */
+                line-height: 1.7;
             }
             
             #newPoemBtn {
@@ -230,7 +236,7 @@
             
             .poem-box {
                 font-size: 1.4rem;
-                line-height: 1.6; /* تقليل المسافة بين الأسطر للجوال */
+                line-height: 1.6;
             }
             
             #newPoemBtn {
@@ -247,7 +253,7 @@
             }
             
             .poem-line {
-                margin: 6px 0; /* تقليل المسافة بين البيت والآخر للجوال */
+                margin: 6px 0;
                 transform: translateX(-20px);
             }
         }
@@ -296,9 +302,6 @@
             from { background-position: 0 0; }
             to { background-position: 0 1000px; }
         }
-        
-        /* تم حذف قسم الرسالة الخاصة */
-        /* تم حذف قسم التذييل */
     </style>
 </head>
 <body>
@@ -315,14 +318,19 @@
         </div>
         
         <div class="btn-container">
-            <button id="newPoemBtn">همسة جديدة <i class="fas fa-heart"></i></button>
+            <button id="newPoemBtn">همسة جديدة</button>
         </div>
     </div>
 
-    <!-- تضمين ملف الأشعار أولاً -->
-<script src="poems.js"></script>
-    
     <script>
+        // بيانات الشعر
+        const poems = [
+            ["يا نَورَ عَيني وَدُنيايَ وَحُبّي", "يا روحَ قلبي وَدَمعَ العَينِ وَالطَربِ", "لَو كانَ لي أَلفُ عَينٍ لَا تَراكِ", "ما كُنتُ أَرضى بِعَينٍ مِنها وَاحِدَه"],
+            ["يا حبيبَ القلبِ يا نورَ العيونِ", "يا شفاءَ الروحِ في كلِّ لحظةٍ", "أنتِ بحرُ العشقِ والوجدانِ", "وأنتِ شمسُ حياتي في الزمان"],
+            ["يا قمراً زانَ في الدنيا جمالُهُ", "وغداً يروي حديثَ الحبِّ سحرُهُ", "أنتِ روحي ونبضي ووجودي", "ودموعُ العينِ من شوقي لِلقاكِ"],
+            ["يا حبيبي أنتِ روحي وريحاني", "أنتِ شمسي في دُجى الليلِ ونجماتي", "وإذا ما غبتِ عن عيني لحظةً", "فكأنَّ الدنيا بلا ضوءٍ ولا حياة"]
+        ];
+
         // عناصر DOM
         const poemBox = document.getElementById('poemBox');
         const newPoemBtn = document.getElementById('newPoemBtn');
